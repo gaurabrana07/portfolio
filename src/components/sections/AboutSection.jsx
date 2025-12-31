@@ -74,7 +74,7 @@ export default function AboutSection({ onNavigate }) {
 
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      <div className="min-h-full flex flex-col items-center justify-center px-4 py-20">
+      <div className="min-h-full flex flex-col items-center justify-center px-4 py-20 pb-28 md:pb-20">
         {/* Header */}
         <motion.div
           className="text-center mb-12"
@@ -103,17 +103,26 @@ export default function AboutSection({ onNavigate }) {
               <div className="relative">
                 <div className="w-32 h-32 rounded-full bg-gradient-to-br from-neon-purple via-neon-blue to-stellar-gold p-1">
                   <div className="w-full h-full rounded-full bg-cosmic-black flex items-center justify-center overflow-hidden">
-                    <span className="text-6xl">👨‍💻</span>
+                    <img 
+                      src={personalInfo.profilePhoto} 
+                      alt={personalInfo.name}
+                      className="w-full h-full object-cover"
+                      onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
+                    />
+                    <span className="text-6xl hidden items-center justify-center">👨‍💻</span>
                   </div>
                 </div>
-                {/* Orbiting badge */}
-                <motion.div
-                  className="absolute -right-2 top-0 w-8 h-8 rounded-full bg-emerald-glow flex items-center justify-center text-sm"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
-                >
-                  ✓
-                </motion.div>
+                {/* Available for work badge */}
+                {personalInfo.availableForWork && (
+                  <motion.div
+                    className="absolute -right-2 top-0 w-8 h-8 rounded-full bg-emerald-glow flex items-center justify-center text-sm"
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    title="Available for opportunities"
+                  >
+                    ✓
+                  </motion.div>
+                )}
               </div>
 
               {/* Name & Title */}
@@ -131,6 +140,10 @@ export default function AboutSection({ onNavigate }) {
                 <div className="flex items-center gap-2 justify-center md:justify-start text-stellar-white/60 text-sm">
                   <span>📍</span>
                   <span>{personalInfo.education.institution}, {personalInfo.education.location}</span>
+                </div>
+                <div className="flex items-center gap-2 justify-center md:justify-start text-stellar-white/60 text-sm">
+                  <span>📅</span>
+                  <span>{personalInfo.education.year} • CGPA: {personalInfo.education.cgpa}</span>
                 </div>
               </div>
             </div>
@@ -242,7 +255,30 @@ export default function AboutSection({ onNavigate }) {
               >
                 <span className="text-2xl">📧</span>
               </motion.a>
+              <motion.a
+                href={`tel:${personalInfo.phone}`}
+                className="w-12 h-12 rounded-full glass flex items-center justify-center text-xl hover:bg-neon-cyan/20 transition-colors"
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <span className="text-2xl">📱</span>
+              </motion.a>
             </div>
+
+            {/* Resume Download Button */}
+            <motion.a
+              href={personalInfo.resumeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 mx-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon-purple/20 to-neon-blue/20 border border-neon-purple/50 hover:border-neon-purple transition-all"
+              whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(168, 85, 247, 0.4)' }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <svg className="w-5 h-5 text-stellar-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              <span className="font-cosmic text-sm tracking-wider text-stellar-white">Download Resume</span>
+            </motion.a>
           </HolographicCard>
         </motion.div>
 

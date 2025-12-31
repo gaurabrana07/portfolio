@@ -1,21 +1,28 @@
 // Personal Information
 export const personalInfo = {
   name: "Gaurab Rana",
-  title: "Full-Stack Developer | Systems & Compiler Enthusiast",
+  title: "Full-Stack Developer • Systems Engineer • AI Enthusiast",
   tagline: "I don't build projects. I build universes.",
   subTagline: "Each universe solves a different problem.",
   email: "ranagaurav892@gmail.com",
-  location: "India",
+  phone: "+91 7895319203",
+  location: "Dehradun, India",
+  resumeLink: "https://drive.google.com/file/d/1hk4YFtr_PlSXt6819rjjNtfAKACzCuu3/view?usp=drivesdk",
+  profilePhoto: "/profile.jpg",
+  availableForWork: true,
   education: {
     degree: "B.Tech in Computer Science Engineering",
     institution: "Graphic Era Hill University",
     location: "Dehradun",
-    year: "Final Year (2025)",
+    year: "2022 - 2026",
+    cgpa: "8.09",
   },
   social: {
     github: "https://github.com/gaurabrana07",
     linkedin: "https://www.linkedin.com/in/gaurab-rana-3569242b8",
     leetcode: "https://leetcode.com/gaurabrana07",
+    twitter: "", // Add your Twitter handle
+    instagram: "", // Add your Instagram link
   },
   about: {
     intro: "In one universe, I optimized systems. In another, I trained machines. In this one, I connect ideas into reality.",
@@ -92,7 +99,7 @@ export const projectsData = [
     innovation: "Custom bootloader with multi-stage boot process",
     color: "#8b5cf6",
     type: "systems",
-    github: "https://github.com/gaurabrana07",
+    github: "https://github.com/gaurabrana07/argon-os",
     status: "In Development",
   },
   {
@@ -105,7 +112,7 @@ export const projectsData = [
     innovation: "Custom intermediate representation for optimization",
     color: "#f97316",
     type: "systems",
-    github: "https://github.com/gaurabrana07",
+    github: "https://github.com/gaurabrana07/gran-compiler",
     status: "In Development",
   },
   {
@@ -118,8 +125,8 @@ export const projectsData = [
     innovation: "AI-powered travel recommendations based on weather and crowd data",
     color: "#3b82f6",
     type: "fullstack",
-    github: "https://github.com/gaurabrana07",
-    live: "#",
+    github: "https://github.com/gaurabrana07/char-dham-tourism", // UPDATE: Add actual repo link
+    live: "", // UPDATE: Add live demo link when available
     status: "Completed",
   },
   {
@@ -251,14 +258,14 @@ export const galaxiesConfig = [
 // Journey Timeline
 export const journeyData = [
   {
-    year: "2021",
+    year: "2022",
     title: "The Beginning",
     description: "Started B.Tech in Computer Science at Graphic Era Hill University. First exposure to programming with C and Python.",
     type: "education",
     milestone: true,
   },
   {
-    year: "2022",
+    year: "2023",
     title: "Deep Dive into DSA",
     description: "Began competitive programming journey on LeetCode. Mastered fundamental data structures and algorithms.",
     type: "learning",
@@ -272,7 +279,7 @@ export const journeyData = [
     milestone: true,
   },
   {
-    year: "2023",
+    year: "2024",
     title: "Systems Programming",
     description: "Started exploring operating systems and compiler design. Began work on ARGON OS.",
     type: "learning",
@@ -294,11 +301,35 @@ export const journeyData = [
   },
   {
     year: "2025",
-    title: "Final Year & Beyond",
+    title: "Pre-Final Year & Beyond",
     description: "Continuing to build impactful projects while preparing for the next chapter in tech.",
     type: "current",
     milestone: true,
   },
+];
+
+// Achievements & Certifications
+export const achievementsData = [
+  {
+    id: 1,
+    title: "Placeholder Achievement", // UPDATE: Add your actual achievement
+    description: "Description of achievement",
+    date: "2024",
+    type: "achievement",
+    icon: "🏆",
+    link: "", // Add certificate/proof link
+  },
+  {
+    id: 2,
+    title: "Placeholder Certification", // UPDATE: Add your actual certification
+    description: "Description of certification",
+    issuer: "Issuing Organization",
+    date: "2024",
+    type: "certification",
+    icon: "📜",
+    link: "", // Add certificate link
+  },
+  // Add more achievements and certifications here
 ];
 
 // Navigation Sections for recruiter mode

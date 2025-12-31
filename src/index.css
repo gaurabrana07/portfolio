@@ -13,6 +13,7 @@ body,
   height: 100%;
   overflow: hidden;
   background: #000003;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 body {
@@ -22,6 +23,56 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Light Mode Styles */
+html.light-mode,
+html.light-mode body,
+html.light-mode #root {
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 50%, #cbd5e1 100%);
+  color: #1e293b;
+}
+
+html.light-mode .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+html.light-mode .glass-purple {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.3);
+}
+
+html.light-mode .text-stellar-white {
+  color: #1e293b;
+}
+
+html.light-mode .text-stellar-white\/50,
+html.light-mode .text-stellar-white\/60,
+html.light-mode .text-stellar-white\/70,
+html.light-mode .text-stellar-white\/80,
+html.light-mode .text-stellar-white\/90 {
+  color: rgba(30, 41, 59, 0.8);
+}
+
+html.light-mode .bg-cosmic-black,
+html.light-mode .bg-cosmic-void,
+html.light-mode .bg-cosmic-deep {
+  background: rgba(241, 245, 249, 0.9);
+}
+
+html.light-mode .bg-cosmic-black\/30,
+html.light-mode .bg-cosmic-black\/50 {
+  background: rgba(203, 213, 225, 0.5);
+}
+
+html.light-mode .cosmic-button {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(59, 130, 246, 0.3));
+  color: #1e293b;
+}
+
+html.light-mode .font-cosmic {
+  color: #1e293b;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
@@ -29,6 +80,10 @@ body {
 
 ::-webkit-scrollbar-track {
   background: rgba(10, 10, 15, 0.8);
+}
+
+html.light-mode ::-webkit-scrollbar-track {
+  background: rgba(203, 213, 225, 0.8);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -43,6 +98,53 @@ body {
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Accessibility - Focus Styles */
+*:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #06b6d4;
+  outline-offset: 2px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Skip to content link for keyboard users */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  padding: 8px 16px;
+  background: #a855f7;
+  color: white;
+  z-index: 9999;
+  text-decoration: none;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.skip-link:focus {
+  top: 0;
 }
 
 /* Cosmic Glow Effects */

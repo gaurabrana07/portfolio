@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeProvider } from './context/ThemeContext';
 import CosmicBackground from './components/3d/CosmicBackground';
 import MultiverseHub from './components/sections/MultiverseHub';
 import GalaxyExplorer from './components/sections/GalaxyExplorer';
@@ -12,6 +13,7 @@ import ContactSection from './components/sections/ContactSection';
 import RecruiterMode from './components/sections/RecruiterMode';
 import LoadingScreen from './components/ui/LoadingScreen';
 import SoundToggle from './components/ui/SoundToggle';
+import ThemeToggle from './components/ui/ThemeToggle';
 import NavigationOrbs from './components/ui/NavigationOrbs';
 import { PremiumOverlays } from './components/effects/VisualOverlays';
 import CursorEffect from './components/effects/CursorEffect';
@@ -25,10 +27,10 @@ function App() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // Simulate loading
+    // Reduced loading time for better UX
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000);
+    }, 1800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -125,7 +127,7 @@ function App() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full h-full">
+      <main id="main-content" className="relative z-10 w-full h-full" role="main">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSection + (isRecruiterMode ? '-recruiter' : '')}
@@ -138,7 +140,7 @@ function App() {
             {renderSection()}
           </motion.div>
         </AnimatePresence>
-      </div>
+      </main>
 
       {/* Navigation Orbs - Hidden in hub and recruiter mode */}
       {!isRecruiterMode && currentSection !== 'hub' && (
@@ -151,8 +153,19 @@ function App() {
 
       {/* Sound Toggle */}
       <SoundToggle enabled={soundEnabled} onToggle={() => setSoundEnabled(!soundEnabled)} />
+
+      {/* Theme Toggle */}
+      <ThemeToggle />
     </div>
   );
 }
 
-export default App;
+function AppWithProviders() {
+  return (
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  );
+}
+
+export default AppWithProviders;

@@ -214,10 +214,10 @@ function SpaceTimeFabric() {
           </linearGradient>
         </defs>
         
-        {/* Horizontal grid lines */}
-        {[...Array(20)].map((_, i) => {
-          const y = (i / 20) * 100;
-          const curve = Math.sin((i / 20) * Math.PI) * 50;
+        {/* Horizontal grid lines - optimized */}
+        {[...Array(12)].map((_, i) => {
+          const y = (i / 12) * 100;
+          const curve = Math.sin((i / 12) * Math.PI) * 50;
           return (
             <motion.path
               key={`h-${i}`}
@@ -237,8 +237,8 @@ function SpaceTimeFabric() {
 export default function JourneySection({ onNavigate }) {
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      {/* Add left padding to account for the fixed navigation orbs (left-6 + w-10 + gap = ~80px) */}
-      <div className="min-h-full pl-16 md:pl-20 pr-4 py-20 relative">
+      {/* Adjusted padding for mobile bottom nav */}
+      <div className="min-h-full px-4 md:pl-20 md:pr-4 py-20 pb-28 md:pb-20 relative">
         {/* Space-time background effect */}
         <SpaceTimeFabric />
 

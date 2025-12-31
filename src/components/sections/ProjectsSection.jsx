@@ -79,16 +79,17 @@ function StarSystem({ project, index, onSelect, isSelected }) {
 
             {/* Inner star */}
             <div
-              className="absolute inset-4 rounded-full flex items-center justify-center backdrop-blur-sm"
+              className="absolute inset-4 rounded-full flex items-center justify-center backdrop-blur-sm overflow-hidden"
               style={{
                 background: `linear-gradient(135deg, ${project.color}40, ${project.color}20)`,
                 border: `1px solid ${project.color}40`,
                 boxShadow: `0 0 30px ${project.color}30`,
               }}
             >
-              <span className="text-3xl">
+              {/* Project icon with type-based styling */}
+              <div className="text-3xl">
                 {project.type === 'ai' ? '🧠' : project.type === 'systems' ? '⚙️' : '🚀'}
-              </span>
+              </div>
             </div>
 
             {/* Status badge */}
@@ -101,6 +102,17 @@ function StarSystem({ project, index, onSelect, isSelected }) {
             >
               {project.status === 'Completed' ? '✓ LIVE' : '◎ WIP'}
             </div>
+
+            {/* Featured badge for key projects */}
+            {(project.id === 1 || project.id === 2 || project.id === 4) && (
+              <motion.div
+                className="absolute -top-1 -left-1 px-2 py-0.5 rounded-full text-[9px] font-medium tracking-wider bg-stellar-gold/20 text-stellar-gold border border-stellar-gold/30"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                ★ FEATURED
+              </motion.div>
+            )}
           </div>
 
           {/* Project Name */}
@@ -206,18 +218,44 @@ function ProjectModal({ project, onClose }) {
 
         {/* Description */}
         <div className="mb-6">
-          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-2 tracking-wider">
-            DESCRIPTION
+          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-2 tracking-wider flex items-center gap-2">
+            <span className="w-5 h-px bg-gradient-to-r from-transparent via-stellar-white/30 to-transparent" />
+            MISSION OVERVIEW
+            <span className="flex-1 h-px bg-gradient-to-r from-stellar-white/30 to-transparent" />
           </h4>
           <p className="text-stellar-white/80 font-space leading-relaxed">
             {project.description}
           </p>
         </div>
 
+        {/* Impact Metrics - NEW */}
+        <div className="mb-6 grid grid-cols-3 gap-3">
+          <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+            <div className="text-lg font-bold" style={{ color: project.color }}>
+              {project.techStack.length}+
+            </div>
+            <div className="text-[10px] text-stellar-white/50 uppercase tracking-wider">Technologies</div>
+          </div>
+          <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+            <div className="text-lg font-bold" style={{ color: project.color }}>
+              {project.challenges.length}
+            </div>
+            <div className="text-[10px] text-stellar-white/50 uppercase tracking-wider">Challenges</div>
+          </div>
+          <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
+            <div className="text-lg font-bold" style={{ color: project.color }}>
+              {project.status === 'Completed' ? '100%' : '~80%'}
+            </div>
+            <div className="text-[10px] text-stellar-white/50 uppercase tracking-wider">Progress</div>
+          </div>
+        </div>
+
         {/* Tech Stack - Orbiting Moons */}
         <div className="mb-6">
-          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-3 tracking-wider">
-            TECH STACK (ORBITING MOONS)
+          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-3 tracking-wider flex items-center gap-2">
+            <span className="w-5 h-px bg-gradient-to-r from-transparent via-stellar-white/30 to-transparent" />
+            TECH ARSENAL
+            <span className="flex-1 h-px bg-gradient-to-r from-stellar-white/30 to-transparent" />
           </h4>
           <div className="flex flex-wrap gap-2">
             {project.techStack.map((tech, i) => (
@@ -241,8 +279,10 @@ function ProjectModal({ project, onClose }) {
 
         {/* Challenges - Asteroids */}
         <div className="mb-6">
-          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-3 tracking-wider">
-            CHALLENGES (ASTEROIDS)
+          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-3 tracking-wider flex items-center gap-2">
+            <span className="w-5 h-px bg-gradient-to-r from-transparent via-stellar-white/30 to-transparent" />
+            CHALLENGES CONQUERED
+            <span className="flex-1 h-px bg-gradient-to-r from-stellar-white/30 to-transparent" />
           </h4>
           <div className="space-y-2">
             {project.challenges.map((challenge, i) => (
@@ -262,8 +302,10 @@ function ProjectModal({ project, onClose }) {
 
         {/* Innovation - Comet */}
         <div className="mb-6">
-          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-2 tracking-wider">
-            INNOVATION (COMET)
+          <h4 className="font-cosmic text-sm text-stellar-white/50 mb-2 tracking-wider flex items-center gap-2">
+            <span className="w-5 h-px bg-gradient-to-r from-transparent via-stellar-white/30 to-transparent" />
+            KEY INNOVATION
+            <span className="flex-1 h-px bg-gradient-to-r from-stellar-white/30 to-transparent" />
           </h4>
           <div
             className="p-4 rounded-xl"
@@ -364,7 +406,7 @@ export default function ProjectsSection({ selectedGalaxy, onNavigate }) {
 
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      <div className="min-h-full px-4 py-20 max-w-7xl mx-auto">
+      <div className="min-h-full px-4 py-20 pb-28 md:pb-20 max-w-7xl mx-auto">
         {/* Header */}
         <FadeSlide direction="up" className="text-center mb-8">
           <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent mx-auto mb-6" />

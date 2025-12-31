@@ -458,16 +458,16 @@ export default function CosmicBackground({ currentSection }) {
       <color attach="background" args={['#000005']} />
       <DeepSpaceNebula />
       <PremiumLighting currentSection={currentSection} />
-      <PremiumStarfield count={isMobile ? 3000 : 10000} isMobile={isMobile} />
+      <PremiumStarfield count={isMobile ? 2000 : 8000} isMobile={isMobile} />
       {!isMobile && <Constellations />}
-      <PremiumCosmicDust count={isMobile ? 150 : 400} />
+      <PremiumCosmicDust count={isMobile ? 100 : 300} />
       {!isMobile && <AuroraEffect />}
       {!isMobile && <ShootingStars />}
       <EffectComposer>
-        <Bloom intensity={isMobile ? 0.25 : 0.4} luminanceThreshold={0.1} luminanceSmoothing={0.9} mipmapBlur />
-        {!isMobile && <ChromaticAberration offset={new THREE.Vector2(0.0005, 0.0005)} blendFunction={BlendFunction.NORMAL} />}
-        <Noise opacity={0.015} blendFunction={BlendFunction.OVERLAY} />
-        <Vignette eskil={false} offset={0.15} darkness={0.7} />
+        <Bloom intensity={isMobile ? 0.2 : 0.35} luminanceThreshold={0.15} luminanceSmoothing={0.9} mipmapBlur />
+        {!isMobile && <ChromaticAberration offset={new THREE.Vector2(0.0003, 0.0003)} blendFunction={BlendFunction.NORMAL} />}
+        <Noise opacity={0.01} blendFunction={BlendFunction.OVERLAY} />
+        <Vignette eskil={false} offset={0.15} darkness={0.6} />
       </EffectComposer>
     </>
   );

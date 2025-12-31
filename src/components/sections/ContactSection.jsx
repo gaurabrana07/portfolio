@@ -77,11 +77,11 @@ function RotatingRays() {
   );
 }
 
-// Ambient floating particles
+// Ambient floating particles - optimized for performance
 function FloatingParticles() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(30)].map((_, i) => (
+      {[...Array(15)].map((_, i) => (
         <motion.div
           key={i}
           className="absolute w-1 h-1 rounded-full"
@@ -172,27 +172,55 @@ export default function ContactSection({ onNavigate }) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
-    await new Promise((resolve) => setTimeout(resolve, 2500));
+    try {
+      // Using FormSubmit.co - a free form submission service
+      // Replace with your email or use other services like EmailJS, Formspree
+      const response = await fetch('https://formsubmit.co/ajax/gaurabrana2580@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formState.name,
+          email: formState.email,
+          message: formState.message,
+          _subject: `Portfolio Contact: Message from ${formState.name}`,
+        })
+      });
 
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormState({ name: '', email: '', message: '' });
-    }, 5000);
+      const data = await response.json();
+      
+      if (data.success === 'true' || response.ok) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormState({ name: '', email: '', message: '' });
+        }, 5000);
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (err) {
+      console.error('Form submission error:', err);
+      setError('Failed to send message. Please try email directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const socialLinks = [
     { icon: '💻', href: personalInfo.social.github, label: 'GitHub' },
     { icon: '💼', href: personalInfo.social.linkedin, label: 'LinkedIn' },
     { icon: '🏆', href: personalInfo.social.leetcode, label: 'LeetCode' },
-    { icon: '📸', href: '#', label: 'Instagram' },
+    { icon: '✉️', href: `mailto:${personalInfo.email}`, label: 'Email' },
+    { icon: '📱', href: `tel:${personalInfo.phone}`, label: 'Call' },
   ];
 
   return (
@@ -201,7 +229,7 @@ export default function ContactSection({ onNavigate }) {
       <FloatingParticles />
       
       {/* Main Content */}
-      <div className="min-h-full flex flex-col items-center justify-center px-4 py-8 md:py-12">
+      <div className="min-h-full flex flex-col items-center justify-center px-4 py-8 pb-28 md:py-12 md:pb-12">
         
         {/* Header */}
         <motion.div
@@ -300,6 +328,23 @@ export default function ContactSection({ onNavigate }) {
                     placeholder="Write your message here..."
                     rows={5}
                   />
+
+                  {/* Error message */}
+                  {error && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="p-4 rounded-xl bg-red-500/20 border border-red-500/30 text-red-400 text-sm font-space text-center"
+                    >
+                      {error}
+                      <a 
+                        href={`mailto:${personalInfo.email}`} 
+                        className="block mt-2 text-cyan-400 underline hover:text-cyan-300"
+                      >
+                        Click here to email directly
+                      </a>
+                    </motion.div>
+                  )}
 
                   {/* Premium Submit Button */}
                   <motion.button

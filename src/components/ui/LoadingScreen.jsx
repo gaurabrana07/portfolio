@@ -19,13 +19,13 @@ export default function LoadingScreen() {
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) return 100;
-        return prev + Math.random() * 15 + 5;
+        return prev + Math.random() * 20 + 10;
       });
-    }, 400);
+    }, 200);
 
     const statusInterval = setInterval(() => {
       setStatusText(statusMessages[Math.floor(Math.random() * statusMessages.length)]);
-    }, 600);
+    }, 400);
 
     return () => {
       clearInterval(progressInterval);
