@@ -26,20 +26,18 @@ function CinematicName({ name, onComplete }) {
             className="font-cosmic text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold inline-block"
             initial={{ 
               opacity: 0, 
-              y: 100,
-              rotateX: -90,
-              filter: 'blur(20px)',
+              y: 50,
+              scale: 0.8,
             }}
             animate={{ 
               opacity: 1, 
               y: 0,
-              rotateX: 0,
-              filter: 'blur(0px)',
+              scale: 1,
             }}
             transition={{ 
-              duration: 0.8,
-              delay: 0.8 + index * 0.08,
-              ease: [0.25, 0.46, 0.45, 0.94],
+              duration: 0.5,
+              delay: 0.3 + index * 0.05,
+              ease: [0.4, 0, 0.2, 1],
             }}
             onAnimationComplete={() => {
               if (index === letters.length - 1) onComplete?.();
@@ -351,16 +349,16 @@ export default function MultiverseHub({ onEnter, onRecruiterMode }) {
   const [nameComplete, setNameComplete] = useState(false);
   const [showBurst, setShowBurst] = useState(false);
   
-  // Progression stages
+  // Progression stages - optimized for faster reveal
   useEffect(() => {
     const timers = [
-      setTimeout(() => setStage(1), 500),    // Show intro text
-      setTimeout(() => setStage(2), 800),    // Start name animation
-      setTimeout(() => setShowBurst(true), 2500), // Particle burst when name complete
-      setTimeout(() => setStage(3), 3000),   // Show title
-      setTimeout(() => setStage(4), 4000),   // Show tagline
-      setTimeout(() => setStage(5), 5000),   // Show buttons
-      setTimeout(() => setStage(6), 5500),   // Show scroll hint
+      setTimeout(() => setStage(1), 100),    // Show intro text
+      setTimeout(() => setStage(2), 250),    // Start name animation
+      setTimeout(() => setShowBurst(true), 1000), // Particle burst when name complete
+      setTimeout(() => setStage(3), 1200),   // Show title
+      setTimeout(() => setStage(4), 1600),   // Show tagline
+      setTimeout(() => setStage(5), 1800),   // Show buttons - FAST
+      setTimeout(() => setStage(6), 2100),   // Show scroll hint
     ];
     
     return () => timers.forEach(clearTimeout);

@@ -229,7 +229,7 @@ export default function ContactSection({ onNavigate }) {
       <FloatingParticles />
       
       {/* Main Content */}
-      <div className="min-h-full flex flex-col items-center justify-center px-4 py-8 pb-28 md:py-12 md:pb-12">
+      <div className="min-h-full flex flex-col items-center justify-center px-4 md:pl-24 md:pr-8 py-8 pb-28 md:py-12 md:pb-12">
         
         {/* Header */}
         <motion.div

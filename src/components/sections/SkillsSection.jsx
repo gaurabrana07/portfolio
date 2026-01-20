@@ -1,171 +1,61 @@
-import { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useSpring, animate } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { skillsData, leetcodeStats } from '../../data/portfolioData';
 
-// Gravity-based skill visualization
-function SkillOrb({ skill, centerX, centerY, index, totalSkills }) {
-  const orbRef = useRef(null);
-  const angle = (index / totalSkills) * Math.PI * 2;
-  const baseRadius = 120 + (skill.level / 100) * 80;
-  
-  const x = useMotionValue(centerX + Math.cos(angle) * baseRadius);
-  const y = useMotionValue(centerY + Math.sin(angle) * baseRadius);
-  const springX = useSpring(x, { stiffness: 50, damping: 20 });
-  const springY = useSpring(y, { stiffness: 50, damping: 20 });
-
-  // Gravitational pull effect based on skill level
-  useEffect(() => {
-    const gravityFactor = skill.level / 100;
-    const pullRadius = baseRadius * (1 - gravityFactor * 0.3);
-    
-    const animation = animate(
-      [0, Math.PI * 2],
-      {
-        duration: 20 + (100 - skill.level) * 0.2,
-        repeat: Infinity,
-        ease: 'linear',
-        onUpdate: (latest) => {
-          const newAngle = angle + latest;
-          x.set(centerX + Math.cos(newAngle) * pullRadius);
-          y.set(centerY + Math.sin(newAngle) * pullRadius + Math.sin(latest * 2) * 10);
-        },
-      }
-    );
-
-    return () => animation.stop();
-  }, [skill.level, angle, centerX, centerY, baseRadius, x, y]);
-
-  const orbSize = 40 + (skill.level / 100) * 40;
-
+// Professional skill bar component
+function SkillBar({ skill, index }) {
   return (
     <motion.div
-      ref={orbRef}
-      className="absolute cursor-pointer group"
-      style={{
-        x: springX,
-        y: springY,
-        width: orbSize,
-        height: orbSize,
-        marginLeft: -orbSize / 2,
-        marginTop: -orbSize / 2,
-      }}
-      whileHover={{ scale: 1.3 }}
+      className="group"
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
     >
-      {/* Outer glow */}
-      <div
-        className="absolute inset-0 rounded-full opacity-30 blur-md"
-        style={{ backgroundColor: skill.color }}
-      />
-      
-      {/* Main orb */}
-      <div
-        className="absolute inset-1 rounded-full flex items-center justify-center transition-all duration-300"
-        style={{
-          backgroundColor: `${skill.color}30`,
-          border: `2px solid ${skill.color}`,
-          boxShadow: `0 0 20px ${skill.color}50, inset 0 0 15px ${skill.color}30`,
-        }}
-      >
-        <span className="font-cosmic text-xs text-stellar-white text-center leading-tight px-1">
-          {skill.name.length > 8 ? skill.name.substring(0, 6) + '..' : skill.name}
-        </span>
+      <div className="flex items-center justify-between mb-2">
+        <span className="font-space text-sm text-stellar-white/90">{skill.name}</span>
+        <span className="text-xs font-cosmic" style={{ color: skill.color }}>{skill.level}%</span>
       </div>
-
-      {/* Tooltip */}
-      <div className="absolute -top-16 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-        <div className="glass rounded-lg px-3 py-2 text-center whitespace-nowrap">
-          <p className="font-cosmic text-sm" style={{ color: skill.color }}>
-            {skill.name}
-          </p>
-          <div className="flex items-center justify-center gap-2 mt-1">
-            <div className="w-16 h-1 bg-cosmic-black/50 rounded-full overflow-hidden">
-              <div
-                className="h-full rounded-full"
-                style={{ width: `${skill.level}%`, backgroundColor: skill.color }}
-              />
-            </div>
-            <span className="text-xs text-stellar-white/60">{skill.level}%</span>
-          </div>
-          {skill.problems && (
-            <p className="text-xs text-stellar-white/50 mt-1">
-              {skill.problems} problems solved
-            </p>
-          )}
-        </div>
+      <div className="h-2 bg-cosmic-black/50 rounded-full overflow-hidden">
+        <motion.div
+          className="h-full rounded-full"
+          style={{ backgroundColor: skill.color }}
+          initial={{ width: 0 }}
+          whileInView={{ width: `${skill.level}%` }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: index * 0.05, ease: 'easeOut' }}
+        />
       </div>
     </motion.div>
   );
 }
 
-// Skill Category Section
+// Skill Category Section - Clean professional design
 function SkillCategory({ title, skills, icon, color }) {
-  const containerRef = useRef(null);
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-  useEffect(() => {
-    if (containerRef.current) {
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      setDimensions({ width, height });
-    }
-  }, []);
-
-  const centerX = dimensions.width / 2;
-  const centerY = dimensions.height / 2;
-
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      className="glass rounded-2xl p-6"
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.4 }}
+      className="glass rounded-2xl p-6 hover:border-opacity-50 transition-all duration-300"
+      style={{ borderColor: `${color}30` }}
     >
-      <div className="flex items-center gap-3 mb-4">
-        <span className="text-2xl">{icon}</span>
-        <h3 className="font-cosmic text-xl tracking-wider" style={{ color }}>
+      <div className="flex items-center gap-3 mb-6">
+        <div 
+          className="w-10 h-10 rounded-xl flex items-center justify-center text-xl"
+          style={{ backgroundColor: `${color}20`, border: `1px solid ${color}40` }}
+        >
+          {icon}
+        </div>
+        <h3 className="font-cosmic text-lg tracking-wider" style={{ color }}>
           {title}
         </h3>
       </div>
 
-      <div
-        ref={containerRef}
-        className="relative h-64 w-full overflow-hidden"
-      >
-        {/* Central core */}
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full"
-          style={{
-            background: `radial-gradient(circle, ${color}50, transparent)`,
-          }}
-        />
-
-        {/* Skill orbs */}
-        {dimensions.width > 0 && skills.map((skill, index) => (
-          <SkillOrb
-            key={skill.name}
-            skill={skill}
-            centerX={centerX}
-            centerY={centerY}
-            index={index}
-            totalSkills={skills.length}
-          />
-        ))}
-      </div>
-
-      {/* Skills list fallback */}
-      <div className="mt-4 flex flex-wrap gap-2">
-        {skills.map((skill) => (
-          <div
-            key={skill.name}
-            className="px-3 py-1 rounded-full text-xs font-space flex items-center gap-2"
-            style={{
-              backgroundColor: `${skill.color}20`,
-              border: `1px solid ${skill.color}40`,
-              color: skill.color,
-            }}
-          >
-            <span>{skill.name}</span>
-            <span className="opacity-60">{skill.level}%</span>
-          </div>
+      <div className="space-y-4">
+        {skills.map((skill, index) => (
+          <SkillBar key={skill.name} skill={skill} index={index} />
         ))}
       </div>
     </motion.div>
@@ -352,12 +242,14 @@ function GitHubStats() {
 export default function SkillsSection({ selectedGalaxy, onNavigate }) {
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      <div className="min-h-full px-4 py-20 pb-28 md:pb-20 max-w-7xl mx-auto">
+      {/* Adjusted padding for navigation panel */}
+      <div className="min-h-full px-4 md:pl-24 md:pr-8 py-20 pb-28 md:pb-20 max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
-          className="text-center mb-12"
-          initial={{ opacity: 0, y: -30 }}
+          className="text-center mb-12 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="font-cosmic text-4xl md:text-5xl tracking-wider mb-4">
             <span className="gradient-text">POWERS</span>

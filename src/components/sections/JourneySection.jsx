@@ -237,14 +237,14 @@ function SpaceTimeFabric() {
 export default function JourneySection({ onNavigate }) {
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      {/* Adjusted padding for mobile bottom nav */}
-      <div className="min-h-full px-4 md:pl-20 md:pr-4 py-20 pb-28 md:pb-20 relative">
+      {/* Adjusted padding for navigation panel on left */}
+      <div className="min-h-full px-4 md:pl-24 md:pr-8 py-20 pb-28 md:pb-20 relative">
         {/* Space-time background effect */}
         <SpaceTimeFabric />
 
-        {/* Header */}
+        {/* Header - centered in content area */}
         <motion.div
-          className="text-center mb-16 relative z-10"
+          className="text-center mb-16 relative z-10 max-w-4xl mx-auto"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
         >
@@ -257,7 +257,7 @@ export default function JourneySection({ onNavigate }) {
         </motion.div>
 
         {/* Timeline Container - centered in available space */}
-        <div className="relative z-10 max-w-5xl mx-auto">
+        <div className="relative z-10 max-w-4xl mx-auto">
           {/* Center vertical line */}
           <div 
             className="absolute left-6 md:left-1/2 md:-translate-x-1/2 top-0 bottom-0 w-1 rounded-full z-0"

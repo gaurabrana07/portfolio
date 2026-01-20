@@ -110,8 +110,8 @@ export default function LoadingScreen() {
           transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
         />
         
-        {/* Orbiting particles */}
-        {[...Array(12)].map((_, i) => (
+        {/* Orbiting particles - reduced count for performance */}
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
             className="absolute w-1.5 h-1.5 rounded-full"
@@ -119,18 +119,17 @@ export default function LoadingScreen() {
               background: i % 3 === 0 ? '#a855f7' : i % 3 === 1 ? '#3b82f6' : '#06b6d4',
               top: '50%',
               left: '50%',
-              boxShadow: `0 0 10px ${i % 3 === 0 ? '#a855f7' : i % 3 === 1 ? '#3b82f6' : '#06b6d4'}`,
+              boxShadow: `0 0 8px ${i % 3 === 0 ? '#a855f7' : i % 3 === 1 ? '#3b82f6' : '#06b6d4'}`,
             }}
             animate={{
-              x: Math.cos(i * Math.PI / 6) * 70 + 'px',
-              y: Math.sin(i * Math.PI / 6) * 70 + 'px',
-              opacity: [0.3, 1, 0.3],
-              scale: [0.5, 1.2, 0.5],
+              x: Math.cos(i * Math.PI / 3) * 65 + 'px',
+              y: Math.sin(i * Math.PI / 3) * 65 + 'px',
+              opacity: [0.4, 1, 0.4],
             }}
             transition={{
-              duration: 2,
+              duration: 1.5,
               repeat: Infinity,
-              delay: i * 0.15,
+              delay: i * 0.2,
               ease: "easeInOut"
             }}
           />

@@ -69,14 +69,17 @@ function PremiumStarfield({ count = 12000, isMobile = false }) {
 
   useFrame((state) => {
     if (ref.current) {
-      ref.current.rotation.y = state.clock.elapsedTime * 0.003;
+      ref.current.rotation.y = state.clock.elapsedTime * 0.002;
       
-      const sizesAttr = ref.current.geometry.attributes.size;
-      for (let i = 0; i < actualCount; i++) {
-        const twinkleSpeed = 0.5 + (i % 10) * 0.3;
-        sizesAttr.array[i] = sizes[i] * (0.5 + 0.5 * Math.sin(state.clock.elapsedTime * twinkleSpeed + twinkle[i]));
+      // Update twinkle less frequently for performance
+      if (Math.floor(state.clock.elapsedTime * 10) % 3 === 0) {
+        const sizesAttr = ref.current.geometry.attributes.size;
+        for (let i = 0; i < actualCount; i += 3) { // Update every 3rd star
+          const twinkleSpeed = 0.3 + (i % 5) * 0.2;
+          sizesAttr.array[i] = sizes[i] * (0.6 + 0.4 * Math.sin(state.clock.elapsedTime * twinkleSpeed + twinkle[i]));
+        }
+        sizesAttr.needsUpdate = true;
       }
-      sizesAttr.needsUpdate = true;
     }
   });
 
@@ -458,16 +461,13 @@ export default function CosmicBackground({ currentSection }) {
       <color attach="background" args={['#000005']} />
       <DeepSpaceNebula />
       <PremiumLighting currentSection={currentSection} />
-      <PremiumStarfield count={isMobile ? 2000 : 8000} isMobile={isMobile} />
+      <PremiumStarfield count={isMobile ? 1500 : 5000} isMobile={isMobile} />
       {!isMobile && <Constellations />}
-      <PremiumCosmicDust count={isMobile ? 100 : 300} />
-      {!isMobile && <AuroraEffect />}
+      <PremiumCosmicDust count={isMobile ? 80 : 200} />
       {!isMobile && <ShootingStars />}
-      <EffectComposer>
-        <Bloom intensity={isMobile ? 0.2 : 0.35} luminanceThreshold={0.15} luminanceSmoothing={0.9} mipmapBlur />
-        {!isMobile && <ChromaticAberration offset={new THREE.Vector2(0.0003, 0.0003)} blendFunction={BlendFunction.NORMAL} />}
-        <Noise opacity={0.01} blendFunction={BlendFunction.OVERLAY} />
-        <Vignette eskil={false} offset={0.15} darkness={0.6} />
+      <EffectComposer multisampling={0}>
+        <Bloom intensity={isMobile ? 0.15 : 0.25} luminanceThreshold={0.2} luminanceSmoothing={0.9} />
+        <Vignette eskil={false} offset={0.1} darkness={0.5} />
       </EffectComposer>
     </>
   );

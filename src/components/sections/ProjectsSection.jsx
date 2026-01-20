@@ -8,8 +8,6 @@ import { FadeSlide, StaggerContainer, staggerItemVariants } from '../effects/Tex
 function StarSystem({ project, index, onSelect, isSelected }) {
   const [isHovered, setIsHovered] = useState(false);
   
-  const moonColors = ['#3b82f6', '#a855f7', '#10b981', '#f97316', '#06b6d4'];
-
   return (
     <motion.div
       className="relative cursor-pointer group"
@@ -20,61 +18,14 @@ function StarSystem({ project, index, onSelect, isSelected }) {
     >
       <HoloCard className="p-6 rounded-2xl">
         <div className="premium-card p-6 rounded-2xl">
-          {/* Orbiting tech stack moons */}
-          <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl">
-            {project.techStack.slice(0, 5).map((tech, i) => {
-              const orbitRadius = 60 + i * 12;
-              const duration = 10 + i * 2;
-              return (
-                <motion.div
-                  key={tech}
-                  className="absolute w-2 h-2 rounded-full"
-                  style={{
-                    top: '50%',
-                    left: '50%',
-                    backgroundColor: moonColors[i % moonColors.length],
-                    boxShadow: `0 0 8px ${moonColors[i % moonColors.length]}`,
-                  }}
-                  animate={{
-                    x: [
-                      Math.cos(0) * orbitRadius,
-                      Math.cos(Math.PI / 2) * orbitRadius,
-                      Math.cos(Math.PI) * orbitRadius,
-                      Math.cos((3 * Math.PI) / 2) * orbitRadius,
-                      Math.cos(Math.PI * 2) * orbitRadius,
-                    ],
-                    y: [
-                      Math.sin(0) * orbitRadius * 0.4,
-                      Math.sin(Math.PI / 2) * orbitRadius * 0.4,
-                      Math.sin(Math.PI) * orbitRadius * 0.4,
-                      Math.sin((3 * Math.PI) / 2) * orbitRadius * 0.4,
-                      Math.sin(Math.PI * 2) * orbitRadius * 0.4,
-                    ],
-                  }}
-                  transition={{
-                    duration,
-                    repeat: Infinity,
-                    ease: 'linear',
-                    delay: i * 0.5,
-                  }}
-                />
-              );
-            })}
-          </div>
-
           {/* Central Star */}
-          <div className="relative w-32 h-32 mx-auto mb-4">
-            {/* Outer corona */}
-            <motion.div
-              className="absolute inset-0 rounded-full"
+          <div className="relative w-28 h-28 mx-auto mb-4">
+            {/* Outer glow */}
+            <div
+              className="absolute inset-0 rounded-full opacity-40"
               style={{
-                background: `radial-gradient(circle, ${project.color}30, transparent 70%)`,
+                background: `radial-gradient(circle, ${project.color}40, transparent 70%)`,
               }}
-              animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.4, 0.7, 0.4],
-              }}
-              transition={{ duration: 3, repeat: Infinity }}
             />
 
             {/* Inner star */}
@@ -406,7 +357,7 @@ export default function ProjectsSection({ selectedGalaxy, onNavigate }) {
 
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      <div className="min-h-full px-4 py-20 pb-28 md:pb-20 max-w-7xl mx-auto">
+      <div className="min-h-full px-4 md:pl-24 md:pr-8 py-20 pb-28 md:pb-20 max-w-7xl mx-auto">
         {/* Header */}
         <FadeSlide direction="up" className="text-center mb-8">
           <div className="w-20 h-[1px] bg-gradient-to-r from-transparent via-orange-500 to-transparent mx-auto mb-6" />

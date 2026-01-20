@@ -27,10 +27,10 @@ function App() {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    // Reduced loading time for better UX
+    // Faster loading for better UX
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1800);
+    }, 1200);
     return () => clearTimeout(timer);
   }, []);
 
@@ -131,10 +131,10 @@ function App() {
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSection + (isRecruiterMode ? '-recruiter' : '')}
-            initial={{ opacity: 0, y: 20, filter: 'blur(10px)' }}
-            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-            exit={{ opacity: 0, y: -20, filter: 'blur(10px)' }}
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.02 }}
+            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             className="w-full h-full"
           >
             {renderSection()}

@@ -74,7 +74,7 @@ export default function AboutSection({ onNavigate }) {
 
   return (
     <div className="w-full h-full overflow-y-auto scroll-container">
-      <div className="min-h-full flex flex-col items-center justify-center px-4 py-20 pb-28 md:pb-20">
+      <div className="min-h-full flex flex-col items-center justify-center px-4 md:pl-24 md:pr-8 py-20 pb-28 md:pb-20">
         {/* Header */}
         <motion.div
           className="text-center mb-12"

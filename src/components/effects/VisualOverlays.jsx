@@ -202,28 +202,20 @@ export function FloatingParticles2D() {
   );
 }
 
-// All overlays combined (optimized for mobile)
+// All overlays combined (optimized for performance)
 export function PremiumOverlays() {
   const isMobile = useIsMobile();
   
-  // On mobile, show only essential lightweight overlays
+  // Lightweight overlays only for better performance
   if (isMobile) {
-    return (
-      <>
-        <Vignette />
-      </>
-    );
+    return <Vignette />;
   }
   
+  // Desktop: minimal overlays for smooth experience
   return (
     <>
       <AmbientGlows />
-      <GridOverlay />
-      <FloatingParticles2D />
       <Vignette />
-      <ChromaticAberration />
-      <Scanlines />
-      <FilmGrain />
     </>
   );
 }

@@ -34,7 +34,7 @@ function DesktopCursor() {
   const cursorX = useMotionValue(0);
   const cursorY = useMotionValue(0);
 
-  const springConfig = { damping: 25, stiffness: 300 };
+  const springConfig = { damping: 30, stiffness: 400, mass: 0.5 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -116,7 +116,7 @@ function DesktopCursor() {
         />
       </motion.div>
 
-      {/* Glow trail */}
+      {/* Glow trail - simplified */}
       <motion.div
         className="fixed top-0 left-0 pointer-events-none z-[9998]"
         style={{
@@ -125,11 +125,10 @@ function DesktopCursor() {
         }}
       >
         <div
-          className="absolute w-32 h-32 rounded-full opacity-20"
+          className="absolute w-24 h-24 rounded-full opacity-15"
           style={{
-            background: 'radial-gradient(circle, rgba(168,85,247,0.4) 0%, rgba(59,130,246,0.2) 40%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(168,85,247,0.5) 0%, transparent 70%)',
             transform: 'translate(-50%, -50%)',
-            filter: 'blur(10px)',
           }}
         />
       </motion.div>

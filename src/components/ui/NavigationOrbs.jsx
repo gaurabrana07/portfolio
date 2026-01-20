@@ -7,9 +7,9 @@ export default function NavigationOrbs({ currentSection, onNavigate, onHome }) {
       {/* Desktop Navigation - Left Side */}
       <motion.nav
         className="fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden md:flex flex-col gap-4"
-        initial={{ opacity: 0, x: -50 }}
+        initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5 }}
+        transition={{ duration: 0.3, delay: 0.2 }}
         aria-label="Main navigation"
         role="navigation"
       >
@@ -55,14 +55,11 @@ export default function NavigationOrbs({ currentSection, onNavigate, onHome }) {
               {isActive && (
                 <motion.div
                   className="absolute inset-0 rounded-full"
-                  animate={{
-                    boxShadow: [
-                      '0 0 10px rgba(168, 85, 247, 0.5)',
-                      '0 0 20px rgba(168, 85, 247, 0.8)',
-                      '0 0 10px rgba(168, 85, 247, 0.5)',
-                    ],
+                  style={{
+                    boxShadow: '0 0 15px rgba(168, 85, 247, 0.6)',
                   }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
                   aria-hidden="true"
                 />
               )}
